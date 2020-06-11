@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--圆形ImageView-->
+    <declare-styleable name="CircleImageView">
+        <!--是否显示为圆形（默认为矩形）-->
+        <attr name="is_circle" format="boolean" />
+        <!--是否覆盖图片内容-->
+        <attr name="is_cover_src" format="boolean" />
+        <attr name="corner_radius" format="dimension" />
+        <attr name="corner_top_left_radius" format="dimension" />
+        <attr name="corner_top_right_radius" format="dimension" />
+        <attr name="corner_bottom_left_radius" format="dimension" />
+        <attr name="corner_bottom_right_radius" format="dimension" />
+        <!--边框宽度-->
+        <attr name="border_width" format="dimension" />
+        <!--边框颜色-->
+        <attr name="border_color" format="color" />
+        <!--内边框 宽度-->
+        <attr name="inner_border_width" format="dimension" />
+        <!--内边框颜色-->
+        <attr name="inner_border_color" format="color" />、
+        <!--图片上绘制的遮罩颜色-->
+        <attr name="mask_color" format="color" />
+    </declare-styleable>
+</resources>
