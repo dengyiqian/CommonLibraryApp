@@ -1,8 +1,13 @@
 package org.dyq.common.util;
 
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+
+import java.util.List;
 
 /**
  * @Author： 邓益千
@@ -13,7 +18,6 @@ public class APPUtils {
 
     /**
      * 获取版本名称
-     *
      * @param context 上下文
      * @return 版本名称
      */
@@ -29,6 +33,26 @@ public class APPUtils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /**启动第三方应用*/
+    public static void getAppOpenIntentByPackageName(Context context, String packageName){
+        String mainAct = null;
+        PackageManager pkgMag = context.getPackageManager();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_LAUNCHER);
+        intent.setFlags(Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED|Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        List<ResolveInfo> list = pkgMag.queryIntentActivities(intent, PackageManager.GET_ACTIVITIES);
+        for (int i = 0; i < list.size(); i++) {
+            ResolveInfo info = list.get(i);
+            if (info.activityInfo.packageName.equals(packageName)) {
+                mainAct = info.activityInfo.name;
+                break;
+            }
+        }
+        intent.setComponent(new ComponentName(packageName, mainAct));
+        context.startActivity(intent);
     }
 
 }
