@@ -1,6 +1,5 @@
 package org.dyq.common.util;
 
-import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
@@ -13,16 +12,14 @@ public class APPUtils {
 
     /**
      * 获取版本名称
-     *
-     * @param context 上下文
      * @return 版本名称
      */
-    public static String getVersionName(Context context) {
+    public static String getVersionName() {
         //获取包管理器
-        PackageManager pm = context.getPackageManager();
+        PackageManager pm = Utils.mContext.getPackageManager();
         //获取包信息
         try {
-            PackageInfo packageInfo = pm.getPackageInfo(context.getPackageName(), 0);
+            PackageInfo packageInfo = pm.getPackageInfo(Utils.mContext.getPackageName(), 0);
             //返回版本号
             return packageInfo.versionName;
         } catch (PackageManager.NameNotFoundException e) {

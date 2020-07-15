@@ -22,4 +22,22 @@
         <!--图片上绘制的遮罩颜色-->
         <attr name="mask_color" format="color" />
     </declare-styleable>
+
+    <declare-styleable name="ShapeTextView">
+        <attr name="pressed_color" format="color" />
+        <attr name="disable_color" format="color" />
+        <attr name="normal_color" format="color" />
+
+        <attr name="corners_radius" format="dimension" />
+        <attr name="top_left_radius" format="dimension" />
+        <attr name="top_right_radius" format="dimension" />
+        <attr name="bottom_left_radius" format="dimension" />
+        <attr name="bottom_right_radius" format="dimension" />
+
+        <attr name="solid_color" format="color" />
+        <attr name="stroke_color" format="color" />
+        <attr name="stroke_width" format="dimension" />
+        <attr name="stroke_dash_gap" format="dimension" />
+        <attr name="stroke_dash_width" format="dimension" />
+    </declare-styleable>
 </resources>
