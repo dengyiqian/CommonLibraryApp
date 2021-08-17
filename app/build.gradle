@@ -22,6 +22,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(':common_library')
+    implementation project(':custom_library')
 
 }
