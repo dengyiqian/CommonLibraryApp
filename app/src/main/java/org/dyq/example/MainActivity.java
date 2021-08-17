@@ -4,23 +4,43 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import org.dyq.common.base.CommonActivity;
-import org.dyq.common.util.APPUtils;
-import org.dyq.common.util.SpannUtils;
+import com.custom.base.BaseViewMolde;
+import com.custom.base.ToolbarActivity;
+import com.custom.base.utils.AppUtils;
+import com.custom.base.utils.SpannUtils;
+
+import org.dyq.example.databinding.ActivityMainBinding;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class MainActivity extends CommonActivity {
+public class MainActivity extends ToolbarActivity<ActivityMainBinding, BaseViewMolde> {
+
+    public MainActivity() {
+        super(BaseViewMolde.class);
+    }
+
+    @Nullable
+    @Override
+    protected CharSequence settingTitle() {
+        return "测试";
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    protected int getContentLayout() {
+        return R.layout.activity_main;
+    }
 
-        TextView textView = findViewById(R.id.text_view);
+    @Override
+    protected void initData() {
 
-        SpannUtils.getBuilder(textView)
-                .append(Objects.requireNonNull(APPUtils.getVersionName()))
+    }
+
+    @Override
+    protected void initView() {
+        SpannUtils.getBuilder(mBinding.textView)
+                .append(Objects.requireNonNull(AppUtils.getVersionName()))
                 .append("\n我是附加第一个").setTextColor(Color.RED)
                 .append("\n我是附加第二个")
                 .append("\n我是附加第三个").setTextColor(Color.BLUE).setBold().setTextSize(30)
