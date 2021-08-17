@@ -1,3 +1,4 @@
 include ':common_library'
 include ':app'
 rootProject.name = "CommonLibraryApp"
+include ':custom_library'
