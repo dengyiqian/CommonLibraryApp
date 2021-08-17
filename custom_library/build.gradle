@@ -27,6 +27,7 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = '1.8'
     }
@@ -44,11 +45,11 @@ dependencies {
 
     api 'androidx.core:core-ktx:1.6.0'
     api 'androidx.appcompat:appcompat:1.3.1'
-    api 'androidx.activity:activity-ktx:1.2.4'
+    api 'androidx.activity:activity-ktx:1.3.1'
     api 'androidx.fragment:fragment-ktx:1.3.6'
-    api 'androidx.startup:startup-runtime:1.0.0'
+    api 'androidx.startup:startup-runtime:1.1.0'
     api 'com.google.android.material:material:1.4.0'
-    api 'androidx.constraintlayout:constraintlayout:2.0.4'
+    api 'androidx.constraintlayout:constraintlayout:2.1.0'
 
     //kotlin and coroutines
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
