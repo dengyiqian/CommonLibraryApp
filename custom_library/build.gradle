@@ -71,6 +71,10 @@ dependencies {
     //腾讯key-value
     api 'com.tencent:mmkv-static:1.2.10'
 
+    api 'com.gyf.immersionbar:immersionbar:3.0.0'
+    api 'com.gyf.immersionbar:immersionbar-ktx:3.0.0'
+    api 'com.gyf.immersionbar:immersionbar-components:3.0.0'
+
     //开源库
     api 'com.github.getActivity:XToast:8.1'
     api 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
