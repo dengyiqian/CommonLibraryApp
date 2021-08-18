@@ -1,4 +1,4 @@
-package com.custom.base
+package com.custom.base.viewmodel
 
 import androidx.collection.ArrayMap
 import androidx.lifecycle.ViewModel

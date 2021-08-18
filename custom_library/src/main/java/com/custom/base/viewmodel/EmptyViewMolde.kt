@@ -1,4 +1,6 @@
-package com.custom.base
+package com.custom.base.viewmodel
+
+import com.custom.base.viewmodel.BaseViewMolde
 
 /**
  *  作者 : dao sanqing

@@ -3,18 +3,15 @@ package com.custom.base
 import android.content.Context
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelLazy
 import androidx.lifecycle.ViewModelProvider
+import com.custom.base.viewmodel.BaseViewMolde
 
 /**
  *  作者 : dao sanqing
