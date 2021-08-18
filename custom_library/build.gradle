@@ -79,4 +79,9 @@ dependencies {
     api 'com.github.getActivity:XToast:8.1'
     api 'com.github.JessYanCoding:AndroidAutoSize:v1.2.1'
     api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.4'
+
+    //下拉刷新
+    api 'com.scwang.smart:refresh-layout-kernel:2.0.3'
+    api 'om.scwang.smart:refresh-header-classics:2.0.3'
+    api 'com.scwang.smart:refresh-footer-classics:2.0.3'
 }
