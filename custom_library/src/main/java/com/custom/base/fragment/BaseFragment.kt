@@ -1,7 +1,9 @@
 package com.custom.base.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +12,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.custom.base.viewmodel.BaseViewMolde
+import java.io.Serializable
 
 /**
  *  作者 : dao sanqing
@@ -45,6 +48,20 @@ abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Class<
         super.onViewCreated(view, savedInstanceState)
         initData()
         initView()
+    }
+
+    fun startActivity(key: String = "", value: Any? = null, clazz: Class<*>){
+        val intent = Intent(mContext,clazz)
+        if (key.isNotEmpty() && value != null){
+            when(value){
+                is Int-> intent.putExtra(key, value)
+                is String-> intent.putExtra(key, value)
+                is Boolean-> intent.putExtra(key, value)
+                is Parcelable -> intent.putExtra(key, value)
+                is Serializable -> intent.putExtra(key, value)
+            }
+        }
+        super.startActivity(intent)
     }
 
     override fun onDestroyView() {
