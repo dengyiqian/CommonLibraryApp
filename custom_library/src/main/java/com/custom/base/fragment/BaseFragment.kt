@@ -23,7 +23,7 @@ abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Class<
 
     protected lateinit var mContext: Context
     protected lateinit var mBinding: VB
-
+    private var lastClickTime = 0L
     protected val viewModel by lazy {
         ViewModelProvider(this).get(clazz)
     }
@@ -51,17 +51,30 @@ abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Class<
     }
 
     fun startActivity(key: String = "", value: Any? = null, clazz: Class<*>){
-        val intent = Intent(mContext,clazz)
-        if (key.isNotEmpty() && value != null){
-            when(value){
-                is Int-> intent.putExtra(key, value)
-                is String-> intent.putExtra(key, value)
-                is Boolean-> intent.putExtra(key, value)
-                is Parcelable -> intent.putExtra(key, value)
-                is Serializable -> intent.putExtra(key, value)
+        if (!isDoubleClick()){
+            val intent = Intent(mContext,clazz)
+            if (key.isNotEmpty() && value != null){
+                when(value){
+                    is Int-> intent.putExtra(key, value)
+                    is String-> intent.putExtra(key, value)
+                    is Boolean-> intent.putExtra(key, value)
+                    is Parcelable -> intent.putExtra(key, value)
+                    is Serializable -> intent.putExtra(key, value)
+                }
             }
+            super.startActivity(intent)
         }
-        super.startActivity(intent)
+    }
+
+
+    fun isDoubleClick(): Boolean {
+        val time = System.currentTimeMillis()
+        val timeD = time - lastClickTime
+        if (timeD in 1..1000) {
+            return true
+        }
+        lastClickTime = time
+        return false
     }
 
     override fun onDestroyView() {
