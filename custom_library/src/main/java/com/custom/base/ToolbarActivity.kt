@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
 import com.custom.base.viewmodel.BaseViewMolde
+import com.gabrielsamojlo.keyboarddismisser.KeyboardDismisser
 import java.io.Serializable
 
 /**
@@ -47,6 +48,7 @@ abstract class ToolbarActivity<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Cla
         initToolBar()
         initData()
         initView()
+        KeyboardDismisser.useWith(this)
     }
 
     override fun setContentView(layoutResID: Int) {

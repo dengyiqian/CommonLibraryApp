@@ -12,6 +12,7 @@ import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.custom.base.viewmodel.BaseViewMolde
+import com.gabrielsamojlo.keyboarddismisser.KeyboardDismisser
 import java.io.Serializable
 
 /**
@@ -46,6 +47,7 @@ abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Class<
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        KeyboardDismisser.useWith(this)
         initData()
         initView()
     }
