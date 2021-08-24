@@ -1,16 +1,21 @@
 package com.custom.base.utils;
 
 import android.graphics.Typeface;
+import android.graphics.drawable.Drawable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.AbsoluteSizeSpan;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ForegroundColorSpan;
+import android.text.style.ImageSpan;
 import android.text.style.StyleSpan;
 import android.widget.TextView;
 
 import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
+
+import com.custom.base.widget.CustomImageSpan;
 
 public class SpannUtils {
 
@@ -20,6 +25,7 @@ public class SpannUtils {
 
     public static class Builder {
 
+        private int instIndex = 0;
         private int textColor = 0;
         private int textSize = 0;
         private int backgroundColor = 0;
@@ -29,6 +35,7 @@ public class SpannUtils {
 
         private CharSequence text;
         private TextView textView;
+        private CustomImageSpan imageSpan;
         private SpannableStringBuilder spannBuilder;
 
         private Builder(@NonNull TextView textView) {
@@ -60,6 +67,18 @@ public class SpannUtils {
 
         public Builder setTextSize(int size){
             this.textSize = size;
+            return this;
+        }
+
+        public Builder instImage(Drawable drawable,int index,int marginLeft, int marginRight){
+            this.instIndex = index;
+            imageSpan = new CustomImageSpan(drawable,marginLeft,marginRight);
+            return this;
+        }
+
+        public Builder instImage(@DrawableRes int drawable,int index,int marginLeft, int marginRight){
+            this.instIndex = index;
+            imageSpan = new CustomImageSpan(drawable,marginLeft,marginRight);
             return this;
         }
 
@@ -115,6 +134,11 @@ public class SpannUtils {
             if (isBold){
                 spannBuilder.setSpan(new StyleSpan(Typeface.BOLD),start,end,spannFlag);
                 isBold = false;
+            }
+            if (imageSpan != null){
+                spannBuilder.setSpan(imageSpan,instIndex, instIndex+1, ImageSpan.ALIGN_BASELINE);
+                instIndex = 0;
+                imageSpan = null;
             }
             spannFlag = Spanned.SPAN_EXCLUSIVE_EXCLUSIVE;
         }

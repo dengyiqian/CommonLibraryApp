@@ -12,32 +12,27 @@ import com.custom.base.databinding.LayoutDataListBinding
 import com.custom.base.viewmodel.BaseViewMolde
 import com.custom.base.viewmodel.ListDataViewModel
 import com.scwang.smart.refresh.layout.api.RefreshLayout
+import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 import org.apache.http.params.HttpParams
 
 
 abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
-    BaseFragment<LayoutDataListBinding,ListDataViewModel<T>>(ListDataViewModel::class.java) {
+    BaseFragment<LayoutDataListBinding,ListDataViewModel<T>>(ListDataViewModel::class.java),
+    OnRefreshLoadMoreListener {
 
     //页面恢复是否需要刷新
     private var isResumeRefresh = false
 
     private var pager = 1
     private var pagerSize = 10
-    
-    companion object {
-        const val POST = "post"
-        const val GET = "get"
-    }
 
     private val mAdapter by lazy { getImpleAdapter() }
 
-    protected val viewModel by lazy { getDataViewModel() }
-
-    override fun setFragmentView(): Int = R.layout.layout_data_list
-
     protected abstract fun getDataViewModel(): ListDataViewModel<T>
-    protected abstract fun getHttpPatams(): HttpParams
+    protected abstract fun getHttpPatams(): Map<String,Any>
     protected abstract fun getImpleAdapter(): BaseQuickAdapter<T, BaseDataBindingHolder<ViewDataBinding>>
+
+    override fun getContentLayout(): Int = R.layout.layout_data_list
 
     override fun initViews() {
         mBinding.recyclerView.apply {
@@ -46,23 +41,23 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
             addItemDecoration(GridItemDecoration())
         }
 
-        binding.smartLayout.setOnRefreshLoadMoreListener(this)
+        mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
 
         initData()
     }
 
     override fun initData() {
         viewModel.dataList.observe(viewLifecycleOwner, Observer<MutableList<T>> {
-            mBinding.smartLayout.closeHeaderOrFooter()
             if (pager == 1) {
                 mAdapter.setNewInstance(it)
-            } else {
+                mBinding.refreshLayout.finishRefresh()
+            } else if (!it.isNullOrEmpty()){
                 mAdapter.addData(it)
             }
-            if (it.size < pagerSize){
-                mBinding.smartLayout.finishRefreshWithNoMoreData()
+            if (it.size == pagerSize){
+                mBinding.refreshLayout.finishLoadMore()
             } else {
-                mBinding.smartLayout.finishLoadMore()
+                mBinding.refreshLayout.finishRefreshWithNoMoreData()
             }
         })
 
@@ -71,11 +66,10 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
             viewModel.requestDataList(pager,pagerSize,getHttpPatams())
         }
     }
+
     open fun getImplManager(): RecyclerView.LayoutManager{
         return LinearLayoutManager(requireContext())
     }
-
-    open fun setRequestType(): String = POST
 
     protected fun isRefresh(enable: Boolean){
         isResumeRefresh = enable
