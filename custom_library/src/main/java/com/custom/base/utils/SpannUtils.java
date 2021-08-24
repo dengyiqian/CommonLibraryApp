@@ -71,12 +71,14 @@ public class SpannUtils {
         }
 
         public Builder instImage(Drawable drawable,int index,int marginLeft, int marginRight){
+            setSpan();
             this.instIndex = index;
             imageSpan = new CustomImageSpan(drawable,marginLeft,marginRight);
             return this;
         }
 
         public Builder instImage(@DrawableRes int drawable,int index,int marginLeft, int marginRight){
+            setSpan();
             this.instIndex = index;
             imageSpan = new CustomImageSpan(drawable,marginLeft,marginRight);
             return this;
