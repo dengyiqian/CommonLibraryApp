@@ -1,24 +1,26 @@
 package com.custom.base.fragment
 
+import android.view.View
 import androidx.databinding.ViewDataBinding
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.custom.base.R
 import com.custom.base.databinding.LayoutDataListBinding
+import com.custom.base.expand.getClazz
 import com.custom.base.viewmodel.BaseViewMolde
 import com.custom.base.viewmodel.ListDataViewModel
+import com.custom.base.widget.GridItemDecoration
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
-import org.apache.http.params.HttpParams
 
 
-abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
-    BaseFragment<LayoutDataListBinding,ListDataViewModel<T>>(ListDataViewModel::class.java),
-    OnRefreshLoadMoreListener {
+abstract class DataListFragment<T,VM: BaseViewMolde> : BaseFragment<LayoutDataListBinding,VM>(), OnRefreshLoadMoreListener,
+    OnItemClickListener {
 
     //页面恢复是否需要刷新
     private var isResumeRefresh = false
@@ -26,15 +28,22 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
     private var pager = 1
     private var pagerSize = 10
 
-    private val mAdapter by lazy { getImpleAdapter() }
+    private val mAdapter by lazy {
+        getImpleAdapter().apply{
+            setOnItemClickListener(this@DataListFragment)
+        }
+    }
 
-    protected abstract fun getDataViewModel(): ListDataViewModel<T>
+    private val listViewMolde: ListDataViewModel<T> by lazy {
+        ViewModelProvider(this).get(getClazz(this,1))
+    }
+
     protected abstract fun getHttpPatams(): Map<String,Any>
-    protected abstract fun getImpleAdapter(): BaseQuickAdapter<T, BaseDataBindingHolder<ViewDataBinding>>
+    protected abstract fun getImpleAdapter(): BaseQuickAdapter<T, *>
 
     override fun getContentLayout(): Int = R.layout.layout_data_list
 
-    override fun initViews() {
+    override fun initView() {
         mBinding.recyclerView.apply {
             adapter = mAdapter
             layoutManager = getImplManager()
@@ -47,7 +56,7 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
     }
 
     override fun initData() {
-        viewModel.dataList.observe(viewLifecycleOwner, Observer<MutableList<T>> {
+        listViewMolde.dataList.observe(viewLifecycleOwner, Observer<MutableList<T>> {
             if (pager == 1) {
                 mAdapter.setNewInstance(it)
                 mBinding.refreshLayout.finishRefresh()
@@ -63,7 +72,7 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
 
         if (!isResumeRefresh){
             pager = 1
-            viewModel.requestDataList(pager,pagerSize,getHttpPatams())
+            listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
         }
     }
 
@@ -77,19 +86,23 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> :
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         pager = 1
-        viewModel.requestDataList(pager,pagerSize,getHttpPatams())
+        listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         pager += 1
-        viewModel.requestDataList(pager,pagerSize,getHttpPatams())
+        listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
+    }
+
+    override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
+
     }
 
     override fun onResume() {
         super.onResume()
         if (isResumeRefresh){
             pager = 1
-            viewModel.requestDataList(pager,pagerSize,getHttpPatams())
+            listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
         }
     }
 }

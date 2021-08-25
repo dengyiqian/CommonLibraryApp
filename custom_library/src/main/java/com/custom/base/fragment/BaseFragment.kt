@@ -20,16 +20,21 @@ import java.io.Serializable
  *  描述 : description
  *  日期 : 2021/8/18 10:07 上午
  */
-abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Class<VM>): Fragment() {
+abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(): Fragment() {
 
-    protected lateinit var mContext: Context
-    protected lateinit var mBinding: VB
     private var lastClickTime = 0L
-    protected val viewModel by lazy {
-        ViewModelProvider(this).get(clazz)
+
+    lateinit var mContext: Context
+
+    lateinit var mBinding: VB
+
+    val viewModel: VM by lazy {
+        ViewModelProvider(this).get(getImplViewModel())
     }
 
     protected abstract fun getContentLayout(): Int
+
+    protected abstract fun getImplViewModel(): Class<VM>
 
     protected abstract fun initData()
     protected abstract fun initView()
@@ -69,7 +74,7 @@ abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Class<
     }
 
 
-    fun isDoubleClick(): Boolean {
+    private fun isDoubleClick(): Boolean {
         val time = System.currentTimeMillis()
         val timeD = time - lastClickTime
         if (timeD in 1..1000) {
