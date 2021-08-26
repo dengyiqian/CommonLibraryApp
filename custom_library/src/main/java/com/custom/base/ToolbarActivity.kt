@@ -54,7 +54,7 @@ abstract class ToolbarActivity<VB: ViewDataBinding,VM: BaseViewMolde>(clazz: Cla
     override fun setContentView(layoutResID: Int) {
         parentView = LinearLayout(mContext).apply {
             orientation = LinearLayout.VERTICAL
-            layoutParams = LinearLayout.LayoutParams(-1,-1)
+            layoutParams = ViewGroup.LayoutParams(-1,-1)
         }
         val rootView = findViewById<ViewGroup>(android.R.id.content)
         rootView.removeAllViews()

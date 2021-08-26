@@ -1,27 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/toolBar"
-    android:elevation="4dp"
-    android:background="@color/teal_200"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    app:navigationIcon="@drawable/vector_back"
-    android:theme="@style/Theme.MaterialComponents.DayNight.DarkActionBar"
-    app:popupTheme="@style/Theme.MaterialComponents.DayNight">
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        tools:text="标题"
-        style="@style/ViewWrap"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="#333"
-        android:id="@+id/toolbarTitle"
-        android:layout_gravity="center"/>
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/basisToolBar"
+        android:elevation="4dp"
+        android:background="#FFBB86FC"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        app:navigationIcon="@drawable/vector_back">
 
-    <TextView
-        style="@style/ViewWrap"
-        android:id="@+id/toolbarOther"/>
+        <TextView
+            tools:text="标题标题标题标题标题标题标题标题标"
+            style="@style/ViewWrap"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="#333"
+            android:id="@+id/toolbarTitle"
+            android:layout_gravity="center"/>
 
-</androidx.appcompat.widget.Toolbar>
+        <TextView
+            style="@style/ViewWrap"
+            android:id="@+id/toolbarOther"/>
+
+    </androidx.appcompat.widget.Toolbar>
+
+</layout>

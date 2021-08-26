@@ -82,7 +82,7 @@ dependencies {
 
     //下拉刷新
     api 'com.scwang.smart:refresh-layout-kernel:2.0.3'
-    api 'om.scwang.smart:refresh-header-classics:2.0.3'
+    api 'com.scwang.smart:refresh-header-classics:2.0.3'
     api 'com.scwang.smart:refresh-footer-classics:2.0.3'
 
     //点空白出关闭键盘
