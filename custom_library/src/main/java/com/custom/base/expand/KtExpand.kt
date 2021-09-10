@@ -1,13 +1,11 @@
 package com.custom.base.expand
 
-import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.annotation.DrawableRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import coil.load
 import coil.loadAny
 import com.custom.base.CustomApp
 import com.custom.base.utils.AppUtils

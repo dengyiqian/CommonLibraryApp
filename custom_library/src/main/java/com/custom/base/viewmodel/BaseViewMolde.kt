@@ -1,27 +1,33 @@
 package com.custom.base.viewmodel
 
-import androidx.collection.ArrayMap
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.LifecycleRegistry
 import androidx.lifecycle.ViewModel
-import rxhttp.awaitResult
-import rxhttp.toClass
-import rxhttp.toOkResponse
-import rxhttp.wrapper.param.RxHttp
+
 
 /**
  *  作者 : dao sanqing
  *  描述 : description
  *  日期 : 2021/7/23 7:30 下午
  */
-open class BaseViewMolde : ViewModel() {
+open class BaseViewMolde : ViewModel(), LifecycleOwner {
 
-    open suspend fun request(url: String, params: ArrayMap<String,Any>, callback:(String)-> Unit){
-        RxHttp.postForm(url,params)
-            .toClass<ViewModel>()
-            .awaitResult {
-                callback.invoke("")
-            }.onFailure {
+//    open fun <T>postRequest(url: String, params: Map<String,Any>, javaBean:Class<T>, success:(T)-> Unit){
+//        lifecycleScope.launch {
+//            RxHttp.postCustomJson(url)
+//                .addAll(params)
+//                .toEntity<javaBean::class>()
+//                .awaitResult {
+//                    success.invoke(it)
+//                }.onFailure {
+//
+//                }
+//        }
+//    }
 
-            }
+    override fun getLifecycle(): Lifecycle {
+        return LifecycleRegistry(this)
     }
 
 }

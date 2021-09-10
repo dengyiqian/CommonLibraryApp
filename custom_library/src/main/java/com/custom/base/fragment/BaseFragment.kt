@@ -11,8 +11,8 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.custom.base.expand.getClazz
 import com.custom.base.viewmodel.BaseViewMolde
-import com.gabrielsamojlo.keyboarddismisser.KeyboardDismisser
 import java.io.Serializable
 
 /**
@@ -20,7 +20,7 @@ import java.io.Serializable
  *  描述 : description
  *  日期 : 2021/8/18 10:07 上午
  */
-abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(): Fragment() {
+abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>: Fragment() {
 
     private var lastClickTime = 0L
 
@@ -29,15 +29,13 @@ abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(): Fragment()
     lateinit var mBinding: VB
 
     val viewModel: VM by lazy {
-        ViewModelProvider(this).get(getImplViewModel())
+        ViewModelProvider(this).get(getClazz(this,1))
     }
 
     protected abstract fun getContentLayout(): Int
 
-    protected abstract fun getImplViewModel(): Class<VM>
-
-    protected abstract fun initData()
-    protected abstract fun initView()
+    open fun initData(){}
+    open fun initView(){}
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -52,7 +50,7 @@ abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>(): Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        KeyboardDismisser.useWith(this)
+//        KeyboardDismisser.useWith(requireActivity())
         initData()
         initView()
     }

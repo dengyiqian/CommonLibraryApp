@@ -11,26 +11,36 @@ object SPUtil {
 
     private val mmkv = MMKV.defaultMMKV()
 
-    fun put(key:String, value: Any){
-        when(value){
-            is Int-> mmkv.putInt(key, value)
-            is Long-> mmkv.putLong(key, value)
-            is Float-> mmkv.putFloat(key, value)
-            is String-> mmkv.putString(key, value)
-            is Boolean-> mmkv.putBoolean(key, value)
+    @JvmStatic
+    fun put(key:String, value: Any?){
+        value?.let {
+            when(it){
+                is Int-> mmkv.putInt(key, it)
+                is Long-> mmkv.putLong(key, it)
+                is Float-> mmkv.putFloat(key, it)
+                is String-> mmkv.putString(key, it)
+                is Boolean-> mmkv.putBoolean(key, it)
+                else -> {}
+            }
         }
     }
 
+    @JvmStatic
     fun getInt(key:String) = mmkv.decodeInt(key)
 
+    @JvmStatic
     fun getLong(key:String) = mmkv.decodeLong(key)
 
+    @JvmStatic
     fun getFloat(key:String) = mmkv.decodeFloat(key)
 
-    fun getString(key:String) = mmkv.decodeString(key)
+    @JvmStatic
+    fun getString(key:String?) = mmkv.decodeString(key)
 
+    @JvmStatic
     fun getBoolean(key:String) = mmkv.decodeBool(key)
 
+    @JvmStatic
     fun remove(key:String) =  mmkv.removeValueForKey(key)
 
 }

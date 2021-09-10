@@ -10,13 +10,15 @@ import androidx.databinding.BindingAdapter
  *  描述 : description
  *  日期 : 2021/8/14 3:35 下午
  */
-class BindingDataAdapter {
+object BindingDataAdapter {
 
+    @JvmStatic
     @BindingAdapter("viewSelected")
     fun setViewSelected(view: View, state: Boolean) {
         view.isSelected = state
     }
 
+    @JvmStatic
     @BindingAdapter("iconDrawableTint")
     fun setIconDrawableTint(view: TextView, @ColorInt color: Int) {
         val drawables = view.compoundDrawablesRelative

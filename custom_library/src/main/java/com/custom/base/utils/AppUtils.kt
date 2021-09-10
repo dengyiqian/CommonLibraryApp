@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.telephony.TelephonyManager
 
 /**
  *  作者 : dao sanqing
@@ -37,6 +38,8 @@ object AppUtils {
         }
 
     /**启动第三方应用 */
+    @SuppressLint("WrongConstant")
+    @JvmStatic
     fun getAppOpenIntentByPackageName(context: Context, packageName: String) {
         var mainAct: String? = null
         val pkgMag = context.packageManager
@@ -53,6 +56,18 @@ object AppUtils {
         }
         intent.component = ComponentName(packageName, mainAct!!)
         context.startActivity(intent)
+    }
+
+    @JvmStatic
+    fun getDeviceId(): String {
+        SPUtil.getString("DEVICE_ID")?.let {
+            return it
+        } ?: kotlin.run {
+            val tm = mContext.getSystemService(Context.TELEPHONY_SERVICE) as TelephonyManager
+            val id = tm.deviceId
+            SPUtil.put("DEVICE_ID",id)
+            return id
+        }
     }
 
 }

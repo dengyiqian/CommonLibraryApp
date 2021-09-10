@@ -1,25 +1,20 @@
 package com.custom.base.fragment
 
 import android.view.View
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.listener.OnItemClickListener
-import com.chad.library.adapter.base.viewholder.BaseDataBindingHolder
 import com.custom.base.R
 import com.custom.base.databinding.LayoutDataListBinding
-import com.custom.base.expand.getClazz
-import com.custom.base.viewmodel.BaseViewMolde
 import com.custom.base.viewmodel.ListDataViewModel
 import com.custom.base.widget.GridItemDecoration
 import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 
-abstract class DataListFragment<T,VM: BaseViewMolde> : BaseFragment<LayoutDataListBinding,VM>(), OnRefreshLoadMoreListener,
+abstract class DataListFragment<T,VM: ListDataViewModel<T>> : BaseFragment<LayoutDataListBinding,VM>(), OnRefreshLoadMoreListener,
     OnItemClickListener {
 
     //页面恢复是否需要刷新
@@ -34,11 +29,6 @@ abstract class DataListFragment<T,VM: BaseViewMolde> : BaseFragment<LayoutDataLi
         }
     }
 
-    private val listViewMolde: ListDataViewModel<T> by lazy {
-        ViewModelProvider(this).get(getClazz(this,1))
-    }
-
-    protected abstract fun getHttpPatams(): Map<String,Any>
     protected abstract fun getImpleAdapter(): BaseQuickAdapter<T, *>
 
     override fun getContentLayout(): Int = R.layout.layout_data_list
@@ -51,12 +41,10 @@ abstract class DataListFragment<T,VM: BaseViewMolde> : BaseFragment<LayoutDataLi
         }
 
         mBinding.refreshLayout.setOnRefreshLoadMoreListener(this)
-
-        initData()
     }
 
     override fun initData() {
-        listViewMolde.dataList.observe(viewLifecycleOwner, Observer<MutableList<T>> {
+        viewModel.dataList.observe(viewLifecycleOwner, Observer<MutableList<T>> {
             if (pager == 1) {
                 mAdapter.setNewInstance(it)
                 mBinding.refreshLayout.finishRefresh()
@@ -72,7 +60,7 @@ abstract class DataListFragment<T,VM: BaseViewMolde> : BaseFragment<LayoutDataLi
 
         if (!isResumeRefresh){
             pager = 1
-            listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
+            viewModel.requestDataList(pager,pagerSize)
         }
     }
 
@@ -86,12 +74,12 @@ abstract class DataListFragment<T,VM: BaseViewMolde> : BaseFragment<LayoutDataLi
 
     override fun onRefresh(refreshLayout: RefreshLayout) {
         pager = 1
-        listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
+        viewModel.requestDataList(pager,pagerSize)
     }
 
     override fun onLoadMore(refreshLayout: RefreshLayout) {
         pager += 1
-        listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
+        viewModel.requestDataList(pager,pagerSize)
     }
 
     override fun onItemClick(adapter: BaseQuickAdapter<*, *>, view: View, position: Int) {
@@ -102,7 +90,7 @@ abstract class DataListFragment<T,VM: BaseViewMolde> : BaseFragment<LayoutDataLi
         super.onResume()
         if (isResumeRefresh){
             pager = 1
-            listViewMolde.requestDataList(pager,pagerSize,getHttpPatams())
+            viewModel.requestDataList(pager,pagerSize)
         }
     }
 }
