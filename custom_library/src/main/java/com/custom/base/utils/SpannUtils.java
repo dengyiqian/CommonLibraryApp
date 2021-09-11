@@ -40,7 +40,7 @@ public class SpannUtils {
 
         private Builder(@NonNull TextView textView) {
             this.textView = textView;
-//            this.textColor = textView.getTextColors();
+            this.text = textView.getText();
             spannBuilder = new SpannableStringBuilder();
         }
 

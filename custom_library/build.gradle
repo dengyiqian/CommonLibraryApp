@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-kapt'
     id 'kotlin-parcelize'
+    id 'maven-publish'
+    id 'signing'
 }
 
 android {
@@ -35,6 +37,43 @@ android {
         enabled = true
     }
 }
+
+//publishing {
+//    publications {
+//        maven(MavenPublication) {
+//            groupId = 'io.github.dengyiqian'
+//            artifactId = 'CommonLibraryApp'
+//            version = '1.0.0'
+//            pom {
+//                name = 'My MVVM Library'
+//                description = 'mvvm framework'
+//                url = 'https://github.com/dengyiqian/CommonLibraryApp'
+//            }
+//            licenses {
+//                license {
+//                    name = 'The Apache License, Version 2.0'
+//                    url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+//                }
+//            }
+//            developers {
+//                developer {
+//                    id = 'johnd'
+//                    name = 'John Doe'
+//                    email = 'superdaoshi@gmail.com'
+//                }
+//            }
+//            scm {
+//                connection = 'scm:git:git://github.com/dengyiqian/CommonLibraryApp.git'
+//                developerConnection = 'scm:git:ssh://github.com/dengyiqian/CommonLibraryApp.git'
+//                url = 'http://github.com/dengyiqian/CommonLibraryApp/'
+//            }
+//        }
+//    }
+//}
+
+//signing {
+//    sign publishing.publications.maven
+//}
 
 dependencies {
 

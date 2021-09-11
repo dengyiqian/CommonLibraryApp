@@ -14,9 +14,6 @@ import java.util.Objects;
 
 public class MainActivity extends ToolbarActivity<ActivityMainBinding, BaseViewMolde> {
 
-    public MainActivity() {
-        super(BaseViewMolde.class);
-    }
 
     @Nullable
     @Override
@@ -30,12 +27,12 @@ public class MainActivity extends ToolbarActivity<ActivityMainBinding, BaseViewM
     }
 
     @Override
-    protected void initData() {
-
+    public void initData() {
+        super.initData();
     }
 
     @Override
-    protected void initView() {
+    public void initView() {
         SpannUtils.getBuilder(mBinding.contentTextView)
                 .append(Objects.requireNonNull(AppUtils.getVersionName()))
                 .append("\n我是附加第一个").setTextColor(Color.RED)
