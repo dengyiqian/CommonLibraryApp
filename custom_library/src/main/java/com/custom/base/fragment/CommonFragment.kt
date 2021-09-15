@@ -20,7 +20,7 @@ import java.io.Serializable
  *  描述 : description
  *  日期 : 2021/8/18 10:07 上午
  */
-abstract class BaseFragment<VB: ViewDataBinding,VM: BaseViewMolde>: Fragment() {
+abstract class CommonFragment<VB: ViewDataBinding,VM: BaseViewMolde>: Fragment() {
 
     private var lastClickTime = 0L
 

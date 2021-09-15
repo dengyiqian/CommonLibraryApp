@@ -14,7 +14,7 @@ import com.scwang.smart.refresh.layout.api.RefreshLayout
 import com.scwang.smart.refresh.layout.listener.OnRefreshLoadMoreListener
 
 
-abstract class DataListFragment<T,VM: ListDataViewModel<T>> : BaseFragment<LayoutDataListBinding,VM>(), OnRefreshLoadMoreListener,
+abstract class DataListFragment<T,VM: ListDataViewModel<T>> : CommonFragment<LayoutDataListBinding,VM>(), OnRefreshLoadMoreListener,
     OnItemClickListener {
 
     //页面恢复是否需要刷新
@@ -59,9 +59,13 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> : BaseFragment<Layou
         })
 
         if (!isResumeRefresh){
-            pager = 1
-            viewModel.requestDataList(pager,pagerSize)
+            getData()
         }
+    }
+
+    open fun getData(){
+        pager = 1
+        viewModel.requestDataList(pager,pagerSize)
     }
 
     open fun getImplManager(): RecyclerView.LayoutManager{
@@ -89,8 +93,7 @@ abstract class DataListFragment<T,VM: ListDataViewModel<T>> : BaseFragment<Layou
     override fun onResume() {
         super.onResume()
         if (isResumeRefresh){
-            pager = 1
-            viewModel.requestDataList(pager,pagerSize)
+            getData()
         }
     }
 }

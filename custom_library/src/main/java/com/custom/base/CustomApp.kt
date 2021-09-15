@@ -1,6 +1,7 @@
 package com.custom.base
 
 import android.graphics.Point
+import android.os.Build
 import android.util.DisplayMetrics
 import android.util.Log
 import android.view.WindowManager
@@ -61,9 +62,15 @@ abstract class CustomApp : MultiDexApplication(), ViewModelStoreOwner, ImageLoad
     }
 
     private fun printInfo(){
+        val wm = getSystemService(WINDOW_SERVICE) as WindowManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R){
+        }
+
+
+
         val point = Point()
         val metrics = DisplayMetrics()
-        val wm = getSystemService(WINDOW_SERVICE) as WindowManager
+
         val display = wm.defaultDisplay
         display.getMetrics(metrics);
         display.getRealSize(point);

@@ -23,11 +23,11 @@ class BaseDialog constructor(context: Context): Dialog(context,R.style.CustomDia
 
     override fun onStart() {
         super.onStart()
-        window?.windowManager?.let {
-            window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-            val params = window!!.attributes
-            params!!.width = (it.defaultDisplay.width * 0.8).toInt()
-            window!!.attributes = params
+        window?.let { win->
+            win.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            val params = win.attributes
+            params.width = (context.resources.displayMetrics.widthPixels * 0.8).toInt()
+            win.attributes = params
         }
     }
 
